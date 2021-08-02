@@ -2,8 +2,7 @@ public class NBody {
     public  static double readRadius(String file){
         In in = new In(file);
         int num = in.readInt();
-        double radius = in.readDouble();
-        return radius;
+        return in.readDouble();
     }
     public static Planet[] readPlanets(String file){
         In in = new In(file);
@@ -17,7 +16,19 @@ public class NBody {
         }
         return array;
     }
-    /*public static void main(String[] args){
-
-    }*/
+    public static void main(String[] args){
+        double T = Double.parseDouble(args[0]);
+        double dt = Double.parseDouble(args[1]);
+        String filename = args[2];
+        double radious = NBody.readRadius(filename);
+        StdDraw.setScale(-2 * radious, 2 * radious);
+        StdDraw.clear();
+        StdDraw.picture(0, 0, "images/starfield.jpg");
+        Planet[] galaxy = NBody.readPlanets(filename);
+        for (Planet p : galaxy){
+            p.draw();
+        }
+        StdDraw.show();
+        StdDraw.pause(2000);
+    }
 }
