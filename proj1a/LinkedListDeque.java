@@ -1,4 +1,4 @@
-public class LinkedListDeque<datatype> {
+public class LinkedListDeque<T> {
     public static class Node<datatype>{
         private datatype data;
         private Node<datatype> next;
@@ -12,16 +12,16 @@ public class LinkedListDeque<datatype> {
     }
 
     private int size = 0;
-    public Node<datatype> sentinel = null;
+    public Node<T> sentinel = null;
     public LinkedListDeque(){
-        sentinel = new Node<datatype>(null);
+        sentinel = new Node<T>(null);
         sentinel.next = sentinel;
         sentinel.prior = sentinel;
 
     }
 
-    public void addFirst(datatype item){
-        Node<datatype> p = new Node<>(item);
+    public void addFirst(T item){
+        Node<T> p = new Node<>(item);
         p.next = sentinel.next;
         p.prior = sentinel;
         sentinel.next.prior = p;
@@ -29,8 +29,8 @@ public class LinkedListDeque<datatype> {
         size++;
     }
 
-    public void addLast(datatype item){
-        Node<datatype> p = new Node<>(item);
+    public void addLast(T item){
+        Node<T> p = new Node<>(item);
         p.next = sentinel;
         p.prior = sentinel.prior;
         sentinel.prior.next = p;
@@ -47,31 +47,31 @@ public class LinkedListDeque<datatype> {
     }
 
     public void printDeque(){
-        Node<datatype> p = sentinel.next;
+        Node<T> p = sentinel.next;
         for(int i = 0; i < size; i++){
             System.out.print(p.data+" ");
             p = p.next;
         }
         System.out.print("\n");
     }
-    public datatype removeFirst(){
+    public T removeFirst(){
         if(this.isEmpty()){
             return null;
         }
         else{
-            datatype r = sentinel.next.data;
+            T r = sentinel.next.data;
             sentinel.next.next.prior = sentinel;
             sentinel.next = sentinel.next.next;
             size--;
             return r;
         }
     }
-    public datatype removeLast(){
+    public T removeLast(){
         if(this.isEmpty()){
             return null;
         }
         else{
-            datatype r = sentinel.prior.data;
+            T r = sentinel.prior.data;
             sentinel.prior.prior.next = sentinel;
             sentinel.prior = sentinel.prior.prior;
             size--;
@@ -79,9 +79,23 @@ public class LinkedListDeque<datatype> {
         }
 
     }
+    public T getRecursive(int index){
+        LinkedListDeque<T> p = new LinkedListDeque<>();
+        p.sentinel = sentinel.next;
+        p.size = size;
+        if (index >= size){
+            return null;
+        }
+        else if (index == 0){
+            return p.sentinel.data;
+        }
+        else{
+            return p.getRecursive(index-1);
+        }
+    }
 
-    public datatype get(int index){
-        Node<datatype> p = sentinel.next;
+    public T get(int index){
+        Node<T> p = sentinel.next;
         for(int i = 0;i<index;i++){
 
             if(p == null){
@@ -93,11 +107,11 @@ public class LinkedListDeque<datatype> {
 
     }
     public LinkedListDeque(LinkedListDeque other){
-        sentinel = new Node<datatype>(null);
-        Node<datatype> p = other.sentinel.next;
-        Node<datatype> p2 = sentinel;
+        sentinel = new Node<T>(null);
+        Node<T> p = other.sentinel.next;
+        Node<T> p2 = sentinel;
         while(p.data!=null){
-            Node<datatype> p1 = new Node<datatype>(p.data);
+            Node<T> p1 = new Node<T>(p.data);
             p2.next = p1;
             p1.prior = p2;
             p2 = p2.next;
@@ -114,7 +128,7 @@ public class LinkedListDeque<datatype> {
         l.addLast(2);
         l.addFirst(3);
         l.printDeque();
-
+        System.out.print(l.getRecursive(2));
         l.removeFirst();
         l.removeLast();
         //System.out.println(l.size);

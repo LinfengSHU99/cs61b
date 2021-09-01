@@ -3,26 +3,26 @@
 //front - 1 == rear full
 //rear++ is the position where the item should be put.
 //front is the position where the item should be put.
-public class ArrayDeque<datatype> {
-    private datatype[] array = null;
+public class ArrayDeque<T> {
+    private T[] array = null;
     private int front = 0;
     private int rear = 0;
-    private int memory =0;
+    private int memory = 0;
     private int size = 0;
     //private int factor = 2;
     public ArrayDeque(){
-        array = (datatype[]) new Object[8];
+        array = (T[]) new Object[8];
         memory = 8;
     }
     public ArrayDeque(ArrayDeque other){
-        array = (datatype[]) new Object[other.size];
+        array = (T[]) new Object[other.size];
         System.arraycopy(other.array, 0, array, 0, other.size);
         memory = other.memory;
         size = other.size;
         rear = other.rear;
         front = other.front;
     }
-    public void addFirst(datatype item){
+    public void addFirst(T item){
         extend();
         array[front] = item;
         front--;
@@ -30,7 +30,7 @@ public class ArrayDeque<datatype> {
         size++;
     }
 
-    public void addLast(datatype item){
+    public void addLast(T item){
         extend();
         rear++;
         rear = getindex(rear);
@@ -40,7 +40,7 @@ public class ArrayDeque<datatype> {
     private void extend(){
         int l = memory - front - 1;
         if(size == memory-1){
-            datatype[] array2 = (datatype[]) new Object[memory * 2];
+            T[] array2 = (T[]) new Object[memory * 2];
             if(rear+1 == front){
                 System.arraycopy(array, 0, array2, 0, rear+1);
                 System.arraycopy(array, front+1, array2, array2.length-l, l);
@@ -58,7 +58,7 @@ public class ArrayDeque<datatype> {
         return size == 0;
     }
 
-    public datatype removeFirst(){
+    public T removeFirst(){
         if(isEmpty()){
             return null;
         }
@@ -66,17 +66,17 @@ public class ArrayDeque<datatype> {
         if(front >= array.length){
             front = 0;
         }
-        datatype r = array[front];
+        T r = array[front];
         size--;
         reduce();
         return r;
     }
 
-    public datatype removeLast(){
+    public T removeLast(){
         if(isEmpty()){
             return null;
         }
-        datatype r = array[rear];
+        T r = array[rear];
         rear--;
         if(rear < 0 ){
             rear = array.length - 1;
@@ -88,7 +88,7 @@ public class ArrayDeque<datatype> {
     private void reduce(){
         if(array.length <= 16 || 1.0 * size / array.length >= 0.25)  return;
         else{
-            datatype[] array2 = (datatype[]) new Object[array.length / 2];
+            T[] array2 = (T[]) new Object[array.length / 2];
             if(front <= rear){
                 System.arraycopy(array, front, array2, 0, size+1);
             }
@@ -112,7 +112,7 @@ public class ArrayDeque<datatype> {
         System.out.print(array[i]+" \n");
 
     }
-    public datatype get(int index){
+    public T get(int index){
         int i = getindex(front + index + 1);
         return array[i];
     }
