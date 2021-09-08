@@ -89,17 +89,17 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         // TODO: Return the first item. None of your instance variables should change.
     }
     public Iterator<T> iterator(){
-        return new ArrayRingBufferIterator<T>();
+        return new ArrayRingBufferIterator();
     }
 
-    public class ArrayRingBufferIterator<T> implements Iterator<T>{
+    public class ArrayRingBufferIterator/*这里不要<T>*/ implements Iterator<T>{
         private int it = first;
         @Override
         public boolean hasNext() {
             return it == last;
         }
         public T next(){
-            T returnvalue = (T) rb[it];
+            T returnvalue = rb[it];
             it = nextindex(it + 1);
             return returnvalue;
         }
