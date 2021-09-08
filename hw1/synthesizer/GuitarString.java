@@ -43,16 +43,7 @@ public class GuitarString {
 
         }
 
-        /*while (flag){
-            flag = false;
-            for(Double i : buffer){
-                if (Objects.equals(i, r)){
-                    flag = true;
-                    r = Math.random()-0.5;
-                    break;
-                }
-            }
-        }*/
+
 
 
         // TODO: Dequeue everything in the buffer, and replace it with random numbers

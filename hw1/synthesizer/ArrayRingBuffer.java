@@ -37,11 +37,11 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * covered Monday.
      */
     public int nextindex(int index){
-        if (index >= capacity){
+        if (index >= capacity()){
             index = 0;
         }
         else if(index < 0){
-            index = capacity - 1;
+            index = capacity() - 1;
         }
         return index;
     }
