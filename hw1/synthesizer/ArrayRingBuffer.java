@@ -36,7 +36,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * throw new RuntimeException("Ring buffer overflow"). Exceptions
      * covered Monday.
      */
-    private int nextindex(int index){
+    public int nextindex(int index){
         if (index >= capacity){
             index = 0;
         }
@@ -92,7 +92,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         return new ArrayRingBufferIterator<T>();
     }
 
-    private class ArrayRingBufferIterator<T> implements Iterator<T>{
+    public class ArrayRingBufferIterator<T> implements Iterator<T>{
         private int it = first;
         @Override
         public boolean hasNext() {
