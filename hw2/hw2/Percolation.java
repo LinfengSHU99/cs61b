@@ -13,6 +13,7 @@ public class Percolation {
     private boolean isPercolates = false;
     private int openSites = 0;
     private WeightedQuickUnionUF set;
+    private WeightedQuickUnionUF set2;
 
     public Percolation(int N){
         if (N <= 0){
@@ -20,24 +21,21 @@ public class Percolation {
         }
         this.N = N;
         square = new Site[N][N];
-        set = new WeightedQuickUnionUF(N * N + 1);
+        set = new WeightedQuickUnionUF(N * N + 2);
+        set2 = new WeightedQuickUnionUF(N * N + 1);
         for(int i = 0; i < N; i++){
             for (int j = 0; j < N; j++){
                 square[i][j] = new Site();
                 square[i][j].state = false;
             }
-            set.union(i, N * N);
+//            set.union(i, N * N);
+//            set.union(N * N - 1 - i, N * N + 1);
+//            set2.union(i, N * N);
         }
     }
     private int getIndex(int row, int col){
         int index = N * row + col;
         return index;
-    }
-    private int[] restoreIndex(int index){
-        int[] indice = new int[2];
-        indice[0] = index / N;
-        indice[1] = index - index / N * N;
-        return indice;
     }
 
     private void throwException(int row, int col){
@@ -55,14 +53,24 @@ public class Percolation {
         if (row == 0){
             square[row][col].isfull = true;
         }
+        if (row == 0){
+            set.union(getIndex(row, col), N * N);
+            set2.union(getIndex(row, col), N * N);
+        }
+        if (row == N - 1){
+            set.union(getIndex(row, col), N * N + 1);
+        }
         for (int i = Math.max(row - 1, 0); i <= Math.min(row + 1, N - 1); i++){
             if(isOpen(i,col)){
                 set.union(getIndex(row, col), getIndex(i, col));
+
+                set2.union(getIndex(row, col), getIndex(i, col));
             }
         }
         for (int i = Math.max(col - 1, 0); i <= Math.min(col + 1, N - 1); i++){
             if(isOpen(row, i)){
                 set.union(getIndex(row, col), getIndex(row, i));
+                set2.union(getIndex(row, col), getIndex(row, i));
             }
         }
 //        if (set.connected(getIndex(row, col), N * N) && row == N - 1){
@@ -77,11 +85,11 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col){
-        if (isOpen(row, col)){
+        //if (isOpen(row, col)){
 
-            return set.connected(getIndex(row, col), N * N);
-        }
-        return false;
+            return set2.connected(getIndex(row, col), N * N);
+        //}
+        //return false;
     }
 
     public int numberOfOpenSites(){
@@ -89,12 +97,7 @@ public class Percolation {
     }
 
     public boolean percolates(){
-        for (int i = 0; i < N; i++){
-            if (set.connected(getIndex(N - 1, i), N * N) && isOpen(N - 1, i)){
-                return true;
-            }
-        }
-        return false;
+        return set.connected(N * N, N * N + 1);
     }
 
     public static void main(String[] args){
