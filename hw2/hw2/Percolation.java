@@ -15,6 +15,9 @@ public class Percolation {
     private WeightedQuickUnionUF set;
 
     public Percolation(int N){
+        if (N <= 0){
+            throw new IllegalArgumentException();
+        }
         this.N = N;
         square = new Site[N][N];
         set = new WeightedQuickUnionUF(N * N + 1);
@@ -87,7 +90,7 @@ public class Percolation {
 
     public boolean percolates(){
         for (int i = 0; i < N; i++){
-            if (set.connected(getIndex(N - 1, i), N * N)){
+            if (set.connected(getIndex(N - 1, i), N * N) && isOpen(N - 1, i)){
                 return true;
             }
         }

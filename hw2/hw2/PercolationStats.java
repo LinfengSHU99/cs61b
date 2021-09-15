@@ -48,19 +48,19 @@ public class PercolationStats {
         for (int i = 0; i < T; i++){
             sum += (fractions[i] - mean) * (fractions[i] - mean);
         }
-        return sum / (T - 1);
+        return Math.sqrt(sum / (T - 1));
 
     }
 
     public double confidenceLow(){
         double mean = mean();
         double dev = stddev();
-        return mean - 1.96 * Math.sqrt(dev) / Math.sqrt(T);
+        return mean - 1.96 * dev / Math.sqrt(T);
     }
 
     public double confidenceHigh(){
         double mean = mean();
         double dev = stddev();
-        return mean + 1.96 * Math.sqrt(dev) / Math.sqrt(T);
+        return mean + 1.96 * dev / Math.sqrt(T);
     }
 }
