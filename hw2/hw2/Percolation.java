@@ -4,11 +4,10 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
-    private class Site {
+    private static class Site {
         private boolean state = false;
         private boolean isfull = false;
     }
-    private Site topsite = new Site();
     private Site[][] square;
     private int N;
     private boolean isPercolates = false;
@@ -26,7 +25,6 @@ public class Percolation {
             }
             set.union(i, N * N);
         }
-
     }
     private int getIndex(int row, int col){
         int index = N * row + col;
@@ -51,33 +49,21 @@ public class Percolation {
             openSites++;
         }
         square[row][col].state = true;
-
-
         if (row == 0){
             square[row][col].isfull = true;
         }
         for (int i = Math.max(row - 1, 0); i <= Math.min(row + 1, N - 1); i++){
             if(isOpen(i,col)){
-//                if (square[i][col].isfull){
-//                    square[row][col].isfull = true;
-//                    if(row == N - 1){
-//                        isPercolates = true;
-//                    }
-//                }
                 set.union(getIndex(row, col), getIndex(i, col));
             }
         }
         for (int i = Math.max(col - 1, 0); i <= Math.min(col + 1, N - 1); i++){
-
             if(isOpen(row, i)){
-//                if (square[row][i].isfull){
-//                    square[row][col].isfull = true;
-//                    if(row == N - 1){
-//                        isPercolates = true;
-//                    }
-//                }
                 set.union(getIndex(row, col), getIndex(row, i));
             }
+        }
+        if (set.connected(getIndex(row, col), N * N) || row == N - 1){
+            isPercolates = true;
         }
     }
 
@@ -89,19 +75,9 @@ public class Percolation {
 
     public boolean isFull(int row, int col){
         if (isOpen(row, col)){
-//            for (int i = 0; i < N; i++){
-//                if (set.connected(getIndex(row, col), i)){
-//                    return true;
-//                }
-//            }
-            if (set.connected(getIndex(row, col), N * N)){
-                if (row == N - 1){
-                    isPercolates = true;
-                }
-                return true;
-            }
-        }
 
+            return set.connected(getIndex(row, col), N * N);
+        }
         return false;
     }
 
@@ -110,11 +86,6 @@ public class Percolation {
     }
 
     public boolean percolates(){
-//        for (int i = 0; i < N; i++){
-//            if (isFull(N - 1, i)){
-//                return true;
-//            }
-//        }
         return isPercolates;
     }
 }
