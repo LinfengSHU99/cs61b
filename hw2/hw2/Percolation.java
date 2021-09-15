@@ -47,8 +47,12 @@ public class Percolation {
 
     public void open(int row, int col){
         throwException(row, col);
+        if(!isOpen(row, col)){
+            openSites++;
+        }
         square[row][col].state = true;
-        openSites++;
+
+
         if (row == 0){
             square[row][col].isfull = true;
         }
