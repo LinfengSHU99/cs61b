@@ -62,7 +62,7 @@ public class Percolation {
                 set.union(getIndex(row, col), getIndex(row, i));
             }
         }
-        if (set.connected(getIndex(row, col), N * N) || row == N - 1){
+        if (set.connected(getIndex(row, col), N * N) && row == N - 1){
             isPercolates = true;
         }
     }
