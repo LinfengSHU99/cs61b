@@ -24,7 +24,10 @@ public class PercolationStats {
             if (p.percolates()){
                 fractions[cnt] =(double) p.numberOfOpenSites() / N / N;
                 cnt++;
-                p = pf.make(N);
+                if (cnt < T){
+                    p = pf.make(N);
+                }
+
             }
         }
 
