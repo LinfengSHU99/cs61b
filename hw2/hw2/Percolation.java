@@ -62,9 +62,9 @@ public class Percolation {
                 set.union(getIndex(row, col), getIndex(row, i));
             }
         }
-        if (set.connected(getIndex(row, col), N * N) && row == N - 1){
-            isPercolates = true;
-        }
+//        if (set.connected(getIndex(row, col), N * N) && row == N - 1){
+//            isPercolates = true;
+//        }
     }
 
     public boolean isOpen(int row, int col){
@@ -86,6 +86,15 @@ public class Percolation {
     }
 
     public boolean percolates(){
-        return isPercolates;
+        for (int i = 0; i < N; i++){
+            if (set.connected(getIndex(N - 1, i), N * N)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args){
+
     }
 }
