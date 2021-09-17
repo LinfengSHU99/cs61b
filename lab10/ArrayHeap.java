@@ -102,8 +102,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private void swim(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
-        validateSinkSwimArg(index);
         if (index == 1) return;
+        validateSinkSwimArg(index);
+
         if (contents[index].myPriority < contents[parentIndex(index)].myPriority) {
             swap(index, parentIndex(index));
             swim(parentIndex(index));
@@ -116,10 +117,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
-        validateSinkSwimArg(index);
         if (index >= size() / 2 + 1) {
             return;
         }
+        validateSinkSwimArg(index);
+
         int minIndex = min(leftIndex(index), rightIndex(index));
         if (contents[index].myPriority > contents[minIndex].myPriority){
             swap(index, minIndex);
@@ -194,7 +196,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     public void changePriority(T item, double priority) {
         int i = 1;
         for (i = 1; i <= size; i++){
-            if (contents[i].myItem == item){
+            if (contents[i].myItem.equals(item)){
                 contents[i].myPriority = priority;
                 break;
             }
@@ -325,6 +327,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         pq.swim(6);
         System.out.println("PQ after swimming:");
         System.out.println(pq);
+
+//        pq.changePriority("x2", 6);
+//        System.out.println(pq);
         assertEquals("x6", pq.contents[1].myItem);
         assertEquals("x2", pq.contents[2].myItem);
         assertEquals("x1", pq.contents[3].myItem);
