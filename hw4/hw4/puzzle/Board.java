@@ -33,7 +33,7 @@ public class Board implements WorldState{
         for (int i = 0; i < size(); i++) {
             for (int j = 0; j < size(); j++) {
                 if (i == j && i == size() - 1) {
-                    if (tileAt(i, j) != 0)  cnt++;
+                    break;
                 }
                 else{
                     if (tileAt(i, j) != i * size() + j + 1){
@@ -54,8 +54,9 @@ public class Board implements WorldState{
                 int indexI = (value - 1) / size();
                 int indexJ = value - indexI * size() - 1;
                 if (value == 0) {
-                    indexI = size() - 1;
-                    indexJ = size() - 1;
+//                    indexI = size() - 1;
+//                    indexJ = size() - 1;
+                    continue;
                 }
                 cnt += (Math.abs(i - indexI) + Math.abs( j - indexJ));
             }
@@ -64,7 +65,7 @@ public class Board implements WorldState{
     }
 
     public int estimatedDistanceToGoal() {
-        return manhattan();
+        return hamming();
     }
 
     public boolean equals(Object y) {
@@ -84,7 +85,7 @@ public class Board implements WorldState{
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
         int r = 0;
