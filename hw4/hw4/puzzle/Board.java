@@ -84,6 +84,17 @@ public class Board implements WorldState{
         }
         return true;
     }
+    
+    @Override
+    public int hashCode() {
+        int r = 0;
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < size(); j++) {
+                r += tileAt(i, j) * i * j;
+            }
+        }
+        return r;
+    }
 
     /**
      * Returns neighbors of this board.
