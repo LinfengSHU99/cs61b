@@ -34,7 +34,11 @@ public class Solver {
 
         @Override
         public boolean equals(Object o) {
-            if (this.getClass() != o.getClass()) {
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || this.getClass() != o.getClass()) {
                 return false;
             }
             SearchNode n = (SearchNode) o;
@@ -79,7 +83,7 @@ public class Solver {
     }
 
     public int moves() {
-        return finalNode.layer + 1;
+        return finalNode.layer;
     }
 
     public Iterable<WorldState> solution() {
